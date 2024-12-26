@@ -22,7 +22,7 @@ export default function Login() {
             {/* heading end */}
 
             {/* login form start */}
-            <div className="mt-5">
+            <div className="mt-5 pb-7">
               <LoginForm />
             </div>
             {/* login form end */}
