@@ -3,10 +3,10 @@ import { NextUITheme } from "@/client_theme";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const montserrat = localFont({
+const geist = localFont({
   src: [
     {
-      path: "../../public/fonts/Montserrat-VariableFont_wght.woff2",
+      path: "../../public/fonts/Geist-VariableFont_wght.ttf",
     },
   ],
 });
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: "/",
-    title: "CoveliteinsHub - Empowering Businesses",
+    title: "CoveliteinsHub - Eccomerce demo project",
     description:
       "Explore CoveliteinsHub's innovative solutions to transform your business. Seamlessly crafted for desktop and mobile platforms.",
     type: "website",
@@ -60,7 +60,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>
+      <body className={geist.className}>
         <NextUITheme>{children}</NextUITheme>
       </body>
     </html>
