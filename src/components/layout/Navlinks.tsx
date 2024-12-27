@@ -17,7 +17,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Link } from "@nextui-org/react";
 
 export function Navlinks({
@@ -34,7 +34,12 @@ export function Navlinks({
     }[];
   }[];
 }) {
-  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleNavigation = (pathname: string) => {
+    if (!pathname) return;
+    router.push(pathname);
+  };
 
   return (
     <SidebarGroup>
@@ -49,37 +54,20 @@ export function Navlinks({
             defaultOpen={item.isActive}
             className="group/collapsible"
           >
-            <SidebarMenuItem>
+            <SidebarMenuItem onClick={() => handleNavigation(item.url)}>
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton
                   tooltip={item.title}
-                  className={`${
-                    pathname == item?.url
-                      ? "bg-[#000080]/60 text-white hover:bg-[#000080]/80 hover:text-white data-[active=true]:bg-[#000080]/60 data-[active=true]:text-white"
-                      : "hover:bg-[#000080]/20 hover:text-[#000080]"
-                  } py-6 px-5 text-base`}
+                  className={`[&_svg]:size-5 py-6 px-3 hover:bg-blue-50 hover:text-blue-600 ${
+                    item.isActive
+                      ? "group-data-[state=open]/collapsible:hover:text-white group-data-[state=open]/collapsible:text-white"
+                      : "group-data-[state=open]/collapsible:hover:text-white group-data-[state=open]/collapsible:text-white"
+                  }  group-data-[state=open]/collapsible:bg-blue-600`}
                 >
-                  {item.url ? (
-                    <Link
-                      href={item.url}
-                      className={`gap-3 text-black ${
-                        pathname == item.url ? "text-white" : ""
-                      }`}
-                    >
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                      {item.items && (
-                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                      )}
-                    </Link>
-                  ) : (
-                    <>
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                      {item.items && (
-                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                      )}
-                    </>
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                  {item.items && (
+                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   )}
                 </SidebarMenuButton>
               </CollapsibleTrigger>

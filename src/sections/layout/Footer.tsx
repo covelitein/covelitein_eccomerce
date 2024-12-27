@@ -23,7 +23,7 @@ export function Footer({
       <SidebarMenuItem>
         <SidebarMenuButton
           size="xl"
-          className="hover:bg-[#000080]/30 hover:text-[#000080] bg-[#000080]/30 text-[#000080] px-3 py-5 active:bg-[#000080]/30 active:text-[#000080]"
+          className="hover:bg-blue-600/30 hover:text-blue-600 bg-blue-600/30 text-blue-600 px-3 py-5 active:bg-blue-600/30 active:text-blue-600"
         >
           <Avatar className="h-10 w-10 rounded-full">
             <AvatarImage
@@ -38,7 +38,7 @@ export function Footer({
               {user.lastname ?? ""}
             </span>
           </div>
-          <div className="px-2 py-2 rounded-full text-white bg-[#000080] hover:bg-[#000080]/70">
+          <div className="px-2 py-2 rounded-full text-white bg-blue-600 hover:bg-blue-600/70">
             <Power size={24} className="ml-auto text-xl" />
           </div>
         </SidebarMenuButton>

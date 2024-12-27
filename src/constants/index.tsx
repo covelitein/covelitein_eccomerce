@@ -1,4 +1,6 @@
 import { Step } from "@/types";
+import { PackageCheck, Star, Tag, Truck } from "lucide-react";
+import { ReactNode } from "react";
 
 export const loginSlides: { img: string; desc: string }[] = [
   {
@@ -20,5 +22,42 @@ export const loginSlides: { img: string; desc: string }[] = [
   {
     img: "/illustrations/cc.png",
     desc: "Shop with confidence—your payments are secure with us.",
+  },
+];
+
+export const userStats: {
+  icon: ReactNode;
+  textColor: string;
+  bgColor: string;
+  title: string;
+  count: number;
+}[] = [
+  {
+    icon: <Truck />,
+    textColor: "text-blue-600",
+    bgColor: "bg-blue-50",
+    title: "Orders in Transit",
+    count: 2,
+  },
+  {
+    icon: <PackageCheck />,
+    textColor: "text-green-600",
+    bgColor: "bg-green-50",
+    title: "Delivered Orders",
+    count: 12,
+  },
+  {
+    icon: <Tag />,
+    textColor: "text-yellow-600",
+    bgColor: "bg-yellow-50",
+    title: "Active Coupons",
+    count: 3,
+  },
+  {
+    icon: <Star />,
+    textColor: "text-purple-600",
+    bgColor: "bg-purple-50",
+    title: "Reward Points",
+    count: 1200,
   },
 ];

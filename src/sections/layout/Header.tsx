@@ -18,6 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Link from "next/link";
 
 export default function Header() {
   const router = useRouter();
@@ -75,75 +76,18 @@ export default function Header() {
           </>
         ) : (
           <>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button
-                    onClick={handleLoginNavigation}
-                    className="relative inline-flex items-center justify-center px-5 py-2.5 overflow-hidden font-medium text-primary transition duration-300 ease-out border-2 border-primary group bg-blue-600 hover:bg-transparent text-white border border-blue-600"
-                  >
-                    <span className="absolute inset-0 flex items-center justify-center w-full h-full text-blue-600 duration-300 -translate-x-full bg-transparent group-hover:translate-x-0 ease">
-                      <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M14 5l7 7m0 0l-7 7m7-7H3"
-                        ></path>
-                      </svg>
-                    </span>
-                    <span className="absolute flex items-center justify-center w-full h-full text-white transition-all duration-300 transform group-hover:translate-x-full ease">
-                      Login
-                    </span>
-                    <span className="relative invisible">Login</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent className="bg-black/80 text-white">
-                  login
-                </TooltipContent>
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button
-                    onClick={handleRegisterNavigation}
-                    className="relative inline-flex items-center justify-center px-5 py-2.5 overflow-hidden font-medium text-primary transition duration-300 ease-out border-2 border-primary group bg-transparent text-white border border-blue-600"
-                  >
-                    <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-primary group-hover:translate-x-0 ease">
-                      <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M14 5l7 7m0 0l-7 7m7-7H3"
-                        ></path>
-                      </svg>
-                    </span>
-                    <span className="absolute flex items-center justify-center w-full h-full text-primary transition-all duration-300 transform group-hover:translate-x-full ease">
-                      Create an Account
-                    </span>
-                    <span className="relative invisible">
-                      Create an Account
-                    </span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent className="bg-black/80 text-white">
-                  Create an Account
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Link
+              href={"/login"}
+              className="hover:bg-blue-700 bg-blue-600 px-5 rounded-lg text-white py-2 border-[2px] border-blue-600 text-sm"
+            >
+              Login
+            </Link>
+            <Link
+              href={"/register"}
+              className="bg-transparent px-5 py-2 border-[2px] rounded-lg border-blue-600 text-blue-600 hover:text-white hover:bg-blue-600 text-sm duration-100 transition-background"
+            >
+              Create account
+            </Link>
           </>
         )}
       </div>
