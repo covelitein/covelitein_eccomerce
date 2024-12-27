@@ -28,7 +28,7 @@ export function DataTablePagination<TData>({
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:gap-6 lg:gap-8">
-        <div className="flex items-center justify-end gap-2 sm:justify-start">
+        <div className="flex items-center justify-start gap-2 sm:justify-start">
           <p className="whitespace-nowrap text-sm font-medium">Rows per page</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
