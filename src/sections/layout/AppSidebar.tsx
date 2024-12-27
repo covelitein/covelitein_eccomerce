@@ -2,16 +2,11 @@
 
 import * as React from "react";
 import {
-  Settings2,
   Grid2x2,
-  Package,
-  Search,
-  ShieldCheck,
   Cog,
-  ShoppingCart,
-  User,
   Heart,
   ClipboardList,
+  ShoppingBag
 } from "lucide-react";
 
 import {
@@ -40,6 +35,12 @@ const data = {
       url: "/dashboard",
       icon: Grid2x2,
       isActive: true,
+    },
+    {
+      title: "Products",
+      url: "/products",
+      icon: ShoppingBag,
+      isActive: false,
     },
     {
       title: "My Orders",

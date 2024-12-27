@@ -99,7 +99,7 @@ export default function RegisterForm() {
             Sign up with Facebook
           </button>
         </div>
-        <p className="text-center text-sm mt-4">
+        <p className="text-center mt-4">
           Already have an account?{" "}
           <Link href="/login" className="text-blue-600 underline">
             Sign in
