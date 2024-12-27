@@ -4,16 +4,26 @@ import React from "react";
 export default function DashboardPage() {
   return (
     <section className="">
-      <div className="px-2 mb-2">
-        <h3 className="text-2xl font-bold">Stats</h3>
+      {/* users stats start */}
+      <div className="">
+        <UserStats />
       </div>
-      <UserStats />
-      <main className="grid lg:grid-cols-3 grid-cols-1 gap-3 mt-10 px-3">
-        <div className="lg:col-span-2 min-h-60">
-          <Order />
-        </div>
+      {/* users stats end */}
+
+      {/* trending products and recently viewed product slide start */}
+      <div className="grid grid-cols-2">
         <div className=""></div>
-      </main>
+      </div>
+      {/* trending products and recently viewed product slide end */}
+
+      {/* recent orders start */}
+      <div className="mt-10 px-3">
+        <div className="mb-4">
+          <h3 className="font-semibold text-xl">Recent Orders</h3>
+        </div>
+        <Order />
+      </div>
+      {/* recent orders end */}
     </section>
   );
 }

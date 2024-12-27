@@ -12,7 +12,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="flex-1">
         <Header />
         <div
           className="w-full box-border px-2 py-4"

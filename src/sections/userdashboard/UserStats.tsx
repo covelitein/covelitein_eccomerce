@@ -29,7 +29,7 @@ export default function UserStats() {
               {stat.count}
             </p>
           </CardHeader>
-          <CardContent className="h-20">
+          <CardContent className="h-4">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={stat.trendData}>
                 <Tooltip />
