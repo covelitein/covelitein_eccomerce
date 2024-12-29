@@ -31,7 +31,7 @@ export function DataTableToolbar<TData>({
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4">
+    <div className="flex flex-wrap items-center justify-between sm:gap-4">
       <div className="flex flex-1 flex-wrap items-center gap-2">
         {searchableColumns.length > 0 &&
           searchableColumns.map(
@@ -46,7 +46,7 @@ export function DataTableToolbar<TData>({
                   onChange={(event) =>
                     table.getColumn(column.id)?.setFilterValue(event.target.value)
                   }
-                  className="h-8 w-full sm:w-[150px] lg:w-[250px]"
+                  className="h-10 w-full sm:w-[150px] lg:w-[250px]"
                 />
               )
           )}

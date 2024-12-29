@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { MixerHorizontalIcon } from '@radix-ui/react-icons';
@@ -25,13 +25,18 @@ export function DataTableViewOptions<TData>({
         <Button
           variant="outline"
           size="sm"
-          className="ml-auto hidden h-8 lg:flex"
+          className="sm:ml-auto h-8 flex max-sm:mt-3 max-sm:w-full"
         >
           <MixerHorizontalIcon className="mr-2 h-4 w-4" />
           View
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
+      <DropdownMenuContent
+        align="end"
+        sideOffset={4}
+        className="sm:w-[150px] max-sm:dropdown-content-width-full"
+        style={{ minWidth: 'inherit' }} // Matches the parent's width
+      >
         <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
