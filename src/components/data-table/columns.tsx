@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { ReactNode } from 'react';
+import { productImages } from '@/sections/userdashboard/Order';
 
 // Define the type for an order
 export interface OrderProps {
@@ -52,11 +53,18 @@ export const columns: ColumnDef<OrderProps>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Products" />
     ),
-    cell: ({ row }) => (
-      <div className="truncate max-w-[200px]" title={row.getValue('products')}>
-        {row.getValue('products')}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const productName = row.getValue('products');
+      const imageUrl = productImages[(productName as string)] || "/images/default_product.jpg";
+      return (
+        <div className="flex items-center space-x-2">
+          <img src={imageUrl} alt={(productName as string)} className="h-8 w-8 rounded" />
+          <span className="truncate max-w-[200px]" title={(productName as string)}>
+            {(productName as string).split(',').join(', ')}
+          </span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'status',
@@ -65,15 +73,18 @@ export const columns: ColumnDef<OrderProps>[] = [
     ),
     cell: ({ row }) => {
       const status = row.getValue('status');
-      const statusColor =
-        status === 'Delivered'
-          ? 'text-green-600'
-          : status === 'Shipped'
-          ? 'text-blue-600'
-          : status === 'Pending'
-          ? 'text-yellow-600'
-          : 'text-red-600';
-      return <span className={`font-medium ${statusColor}`}>{(status as ReactNode)}</span>;
+      const statusStyles = {
+        Delivered: "bg-green-100 text-green-600",
+        Shipped: "bg-blue-100 text-blue-600",
+        Pending: "bg-yellow-100 text-yellow-600",
+        Cancelled: "bg-red-100 text-red-600",
+      };
+      const style = statusStyles[status as keyof typeof statusStyles];
+      return (
+        <span className={`font-medium px-2 py-1 rounded ${style}`}>
+          {status as ReactNode}
+        </span>
+      );
     },
   },
   {
@@ -98,5 +109,3 @@ export const columns: ColumnDef<OrderProps>[] = [
     cell: ({ row }) => <div>{row.getValue('deliveryETA')}</div>,
   },
 ];
-
-
