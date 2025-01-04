@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PhoneInput } from "@/components/ui/phone-input";
@@ -7,11 +9,13 @@ import { FileWithPreview, ImageCropper } from "@/components/ui/image-cropper";
 import { FileWithPath, useDropzone } from "react-dropzone";
 
 const accept = {
-    "image/*": [],
-  }
+  "image/*": [],
+};
 
 export default function Account() {
-  const [selectedFile, setSelectedFile] = useState<FileWithPreview | null>(null);
+  const [selectedFile, setSelectedFile] = useState<FileWithPreview | null>(
+    null
+  );
   const [isDialogOpen, setDialogOpen] = React.useState(false);
 
   const onDrop = React.useCallback(
@@ -29,7 +33,6 @@ export default function Account() {
       setSelectedFile(fileWithPreview);
       setDialogOpen(true);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -37,10 +40,11 @@ export default function Account() {
     onDrop,
     accept,
   });
+
   return (
-    <div className="mt-5">
+    <div className="mt-5 px-4 md:px-6 lg:px-8">
       {/* Profile Image Section */}
-      <div className="relative mb-4">
+      <div className="relative mb-4 flex justify-center">
         {selectedFile ? (
           <ImageCropper
             dialogOpen={isDialogOpen}
@@ -51,7 +55,7 @@ export default function Account() {
         ) : (
           <Avatar
             {...getRootProps()}
-            className="size-36 cursor-pointer ring-offset-2 ring-2 ring-slate-200"
+            className="size-24 md:size-36 cursor-pointer ring-offset-2 ring-2 ring-slate-200"
           >
             <input {...getInputProps()} />
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -61,7 +65,7 @@ export default function Account() {
       </div>
 
       {/* Form Section */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div>
           <Input placeholder="First name..." />
         </div>
@@ -69,7 +73,7 @@ export default function Account() {
           <Input placeholder="Last name..." />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-3 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
         <div>
           <Input placeholder="Email..." />
         </div>
@@ -80,7 +84,9 @@ export default function Account() {
       <div className="mt-4 mb-4">
         <PhoneInput defaultCountry="NG" placeholder="Enter a phone number" />
       </div>
-      <Button>Update Account</Button>
+      <div className="flex justify-center md:justify-end">
+        <Button>Update Account</Button>
+      </div>
     </div>
   );
 }

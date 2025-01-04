@@ -1,5 +1,6 @@
-"use client";
+'use client'
 
+// Settings Component
 import {
   Dialog,
   DialogContent,
@@ -9,12 +10,9 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useDialogForSettings } from "@/store/use-dialog";
-
-// Lucide Icons
 import { User, Lock, Bell, CreditCard } from "lucide-react";
 import { Account } from "../modalContents";
 
-// Tab configuration with content
 const tabs = [
   {
     value: "account",
@@ -45,12 +43,12 @@ const tabs = [
   },
 ];
 
-export default function Settings() {
+export function Settings() {
   const { isOpen, close } = useDialogForSettings();
 
   return (
     <Dialog open={isOpen} onOpenChange={isOpen ? close : undefined}>
-      <DialogContent className="max-w-5xl h-11/12 overflow-y-scroll">
+      <DialogContent className="max-w-full md:max-w-5xl h-full md:h-11/12 overflow-y-scroll px-4 md:px-6">
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
           <DialogDescription>Customize your account settings</DialogDescription>
@@ -59,9 +57,9 @@ export default function Settings() {
           <Tabs
             defaultValue="account"
             orientation="vertical"
-            className="flex flex-row gap-4"
+            className="flex flex-col md:flex-row gap-4"
           >
-            <TabsList className="flex flex-col items-start justify-start py-3 box-border h-auto bg-gray-100 w-[15rem] px-3">
+            <TabsList className="flex flex-row md:flex-col items-start justify-start py-3 box-border h-auto bg-gray-100 w-full md:w-[15rem] px-3">
               {tabs.map(({ value, label, icon: Icon }) => (
                 <TabsTrigger
                   key={value}

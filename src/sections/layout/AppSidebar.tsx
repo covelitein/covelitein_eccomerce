@@ -16,7 +16,7 @@ import {
 import { Footer } from "./Footer";
 import { Navlinks } from "@/components/layout/Navlinks";
 import { useDialogForSettings } from "@/store/use-dialog";
-import Settings from "../userdashboard/modals/Settings";
+import { Settings } from "../userdashboard/modals/Settings";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open } = useDialogForSettings();
