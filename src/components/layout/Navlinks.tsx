@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronRight, type LucideIcon } from "lucide-react";
-
+import { useState } from "react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -37,9 +37,16 @@ export function Navlinks({
 }) {
   const router = useRouter();
 
+  // State to track the active menu item
+  const [activeItem, setActiveItem] = useState<string | null>(null);
+
   const handleNavigation = (pathname: string) => {
     if (!pathname) return;
     router.push(pathname);
+  };
+
+  const handleActiveItem = (title: string) => {
+    setActiveItem(title);
   };
 
   return (
@@ -61,10 +68,11 @@ export function Navlinks({
                   <SidebarMenuButton
                     tooltip={item.title}
                     className={`[&_svg]:size-5 py-6 px-3 hover:bg-blue-50 hover:text-blue-600 ${
-                      item.isActive
-                        ? "group-data-[state=open]/collapsible:hover:text-white group-data-[state=open]/collapsible:text-white"
-                        : "group-data-[state=open]/collapsible:hover:text-white group-data-[state=open]/collapsible:text-white"
-                    }  group-data-[state=open]/collapsible:bg-blue-600`}
+                      activeItem === item.title
+                        ? "bg-blue-600 text-white"
+                        : "bg-transparent text-gray-900"
+                    }`}
+                    onClick={() => handleActiveItem(item.title)}
                   >
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
@@ -72,15 +80,18 @@ export function Navlinks({
                 </CollapsibleTrigger>
               </SidebarMenuItem>
             ) : (
-              <SidebarMenuItem onClick={() => handleNavigation(item.url)}>
+              <SidebarMenuItem onClick={() => {
+                handleNavigation(item.url);
+                handleActiveItem(item.title);
+              }}>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton
                     tooltip={item.title}
                     className={`[&_svg]:size-5 py-6 px-3 hover:bg-blue-50 hover:text-blue-600 ${
-                      item.isActive
-                        ? "group-data-[state=open]/collapsible:hover:text-white group-data-[state=open]/collapsible:text-white"
-                        : "group-data-[state=open]/collapsible:hover:text-white group-data-[state=open]/collapsible:text-white"
-                    }  group-data-[state=open]/collapsible:bg-blue-600`}
+                      activeItem === item.title
+                        ? "bg-blue-600 text-white"
+                        : "bg-transparent text-gray-900"
+                    }`}
                   >
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
