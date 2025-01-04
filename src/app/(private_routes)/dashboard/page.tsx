@@ -4,7 +4,7 @@ import React from "react";
 
 export default function DashboardPage() {
   return (
-    <section className="px-2 py-3">
+    <section className="sm:px-2 py-3">
       {/* welcome start */}
       <div className="px-3 mb-10">
         <div className="mb-4">
