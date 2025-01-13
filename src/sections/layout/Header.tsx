@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useRef, useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,88 +10,101 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { Cog, User } from "lucide-react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Cog, User, LogOut, Bell, Sun, Moon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import Link from "next/link";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function Header() {
   const router = useRouter();
-  const [auth, setAuth] = React.useState<boolean>(false);
+  const [auth, setAuth] = useState<boolean>(true);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+  const headerRef = useRef<HTMLDivElement | null>(null);
 
-  const handleRegisterNavigation = () => {
-    router.push("/register");
-  };
+  const toggleDarkMode = () => setDarkMode((prev) => !prev);
 
-  const handleLoginNavigation = () => {
-    router.push("/login");
-  };
+  useEffect(() => {
+    const updateCSSVariable = () => {
+      if (headerRef.current) {
+        const headerWidth = headerRef.current.offsetWidth - 10;
+
+        // Apply CSS variable for dropdown width based on breakpoints
+        if (window.innerWidth < 640) {
+          // 'sm' breakpoint: Fixed width for small screens
+          document.documentElement.style.setProperty(
+            "--dropdown-width",
+            `${headerWidth}px`
+          );
+        } else {
+          // Dynamic width for larger screens
+          document.documentElement.style.setProperty(
+            "--dropdown-width",
+            `${headerWidth}px`
+          );
+        }
+      }
+    };
+
+    // Initial call and update on resize
+    updateCSSVariable();
+    window.addEventListener("resize", updateCSSVariable);
+
+    return () => {
+      window.removeEventListener("resize", updateCSSVariable);
+    };
+  }, []);
+
   return (
-    <header className="sticky top-0 flex justify-between shrink-0 items-center gap-2 border-b py-3 px-5 bg-white z-50">
-      <SidebarTrigger className="-ml-1" />
-      <div className="flex items-center gap-3">
-        {auth ? (
-          <>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="h-10 w-10 rounded-full cursor-pointer">
-                  <AvatarImage
-                    src={"/illustrations/user-1.jpg"}
-                    alt={"user.name"}
-                  />
-                  <AvatarFallback className="rounded-full">CN</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="sm:w-[25rem] w-[90vw] overflow-x-hidden sm:px-6 px-2 sm:py-4"
-              >
-                <DropdownMenuLabel className="text-xl font-semibold py-3">
-                  User Profile
-                </DropdownMenuLabel>
-                <DropdownMenuItem>
-                  <h3>hello</h3>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="py-4  [&_svg]:size-6 px-3">
-                  <div className="bg-[#000080]/40 p-3 rounded-full text-white">
-                    <User />
-                  </div>
-                  <span>Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="py-4  [&_svg]:size-6 px-3">
-                  <div className="bg-[#000080]/40 p-3 rounded-full text-white">
-                    <Cog />
-                  </div>
-                  <span>Settings</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </>
-        ) : (
-          <>
-            <Link
-              href={"/login"}
-              className="hover:bg-blue-700 bg-blue-600 px-5 rounded-lg text-white py-2 border-[2px] border-blue-600 text-sm"
-            >
-              Login
-            </Link>
-            <Link
-              href={"/register"}
-              className="bg-transparent px-5 py-2 border-[2px] rounded-lg border-blue-600 text-blue-600 hover:text-white hover:bg-blue-600 text-sm duration-100 transition-background"
-            >
-              Create account
-            </Link>
-          </>
-        )}
+    <header
+      ref={headerRef}
+      className="sticky top-0 flex justify-between items-center px-4 py-3 bg-white dark:bg-gray-900 border-b z-50"
+    >
+      <SidebarTrigger />
+      <div className="flex items-center gap-2">
+        {/* Notification Button */}
+        <Button variant="ghost" size="icon">
+          <Bell className="w-5 h-5" />
+        </Button>
+
+        {/* Profile Avatar with Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Avatar className="h-10 w-10 rounded-full cursor-pointer">
+              <AvatarImage src="/illustrations/user-1.jpg" alt="User Avatar" />
+              <AvatarFallback>JD</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="mt-3 p-2 shadow-lg rounded-lg bg-white dark:bg-gray-800 max-sm:w-[var(--dropdown-width)] w-[12rem] max-sm:ml-1.5"
+          >
+            <DropdownMenuLabel className="text-lg font-semibold">
+              John Doe
+            </DropdownMenuLabel>
+            <DropdownMenuItem>
+              <User className="w-5 h-5 mr-2 text-gray-600" />
+              My Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Cog className="w-5 h-5 mr-2 text-gray-600" />
+              Settings
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <LogOut className="w-5 h-5 mr-2 text-gray-600" />
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* Dark Mode Toggle */}
+        <Button variant="ghost" size="icon" onClick={toggleDarkMode}>
+          {darkMode ? (
+            <Moon className="w-5 h-5" />
+          ) : (
+            <Sun className="w-5 h-5" />
+          )}
+        </Button>
       </div>
     </header>
   );

@@ -78,7 +78,7 @@ export const ScrollableTabs: React.FC<ScrollableTabsProps> = ({
         
         <div
           ref={scrollContainerRef}
-          className="flex overflow-x-auto scrollbar-hide scroll-smooth"
+          className="flex overflow-x-auto scrollbar-hide scroll-smooth justify-between w-full"
           onScroll={checkScrollButtons}
           role="tablist"
         >

@@ -48,7 +48,7 @@ export function Settings() {
 
   return (
     <Dialog open={isOpen} onOpenChange={isOpen ? close : undefined}>
-      <DialogContent className="max-w-full md:max-w-5xl h-full md:h-11/12 overflow-y-scroll px-4 md:px-6">
+      <DialogContent className="max-w-full md:max-w-5xl h-[95%] max-sm:h-full md:h-11/12 overflow-y-scroll sm:px-4 px-2 md:px-6">
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
           <DialogDescription>Customize your account settings</DialogDescription>

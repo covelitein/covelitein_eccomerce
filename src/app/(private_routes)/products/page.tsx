@@ -1,9 +1,221 @@
-import React from 'react'
+import Filter from "@/sections/product/Filter";
+import ProductListings from "@/sections/product/ProductListings";
+import { Product } from "@/types";
+import React from "react";
+
+const products: Product[] = [
+  {
+    id: "1",
+    name: "Wireless Headphones",
+    image: "https://source.unsplash.com/featured/800x600/?wireless+headphones",
+    category: "Electronics",
+    price: 99.99,
+    rating: 4.5,
+    reviews: 120,
+    description: "High-quality wireless headphones with noise cancellation.",
+  },
+  {
+    id: "2",
+    name: "Smart Watch",
+    image: "https://images.unsplash.com/featured/800x600/?smartwatch",
+    category: "Wearables",
+    price: 149.99,
+    rating: 4.2,
+    reviews: 80,
+    description:
+      "Feature-packed smart watch with fitness tracking capabilities.",
+  },
+  {
+    id: "3",
+    name: "Running Shoes",
+    image: "https://source.unsplash.com/featured/800x600/?running+shoes",
+    category: "Footwear",
+    price: 79.99,
+    rating: 4.8,
+    reviews: 200,
+    description: "Lightweight and comfortable running shoes for athletes.",
+  },
+  {
+    id: "4",
+    name: "Bluetooth Speaker",
+    image: "https://source.unsplash.com/featured/800x600/?bluetooth+speaker",
+    category: "Audio",
+    price: 59.99,
+    rating: 4.3,
+    reviews: 150,
+    description: "Portable Bluetooth speaker with excellent sound quality.",
+  },
+  {
+    id: "5",
+    name: "Gaming Laptop",
+    image: "https://source.unsplash.com/featured/800x600/?gaming+laptop",
+    category: "Computers",
+    price: 1299.99,
+    rating: 4.7,
+    reviews: 300,
+    description: "High-performance gaming laptop with cutting-edge graphics.",
+  },
+  {
+    id: "6",
+    name: "Desk Lamp",
+    image: "https://source.unsplash.com/featured/800x600/?desk+lamp",
+    category: "Home",
+    price: 29.99,
+    rating: 4.0,
+    reviews: 50,
+    description: "Adjustable LED desk lamp with multiple brightness settings.",
+  },
+  {
+    id: "7",
+    name: "Fitness Tracker",
+    image: "https://source.unsplash.com/featured/800x600/?fitness+tracker",
+    category: "Wearables",
+    price: 49.99,
+    rating: 4.4,
+    reviews: 220,
+    description: "Track your fitness goals with this sleek fitness tracker.",
+  },
+  {
+    id: "8",
+    name: "Wireless Keyboard",
+    image: "https://source.unsplash.com/featured/800x600/?wireless+keyboard",
+    category: "Accessories",
+    price: 39.99,
+    rating: 4.6,
+    reviews: 190,
+    description: "Compact and durable wireless keyboard for easy typing.",
+  },
+  {
+    id: "9",
+    name: "Smartphone",
+    image: "https://source.unsplash.com/featured/800x600/?smartphone",
+    category: "Mobile",
+    price: 899.99,
+    rating: 4.9,
+    reviews: 1000,
+    description: "Latest-generation smartphone with powerful features.",
+  },
+  {
+    id: "10",
+    name: "Electric Kettle",
+    image: "https://source.unsplash.com/featured/800x600/?electric+kettle",
+    category: "Kitchen",
+    price: 24.99,
+    rating: 4.3,
+    reviews: 85,
+    description: "Fast-boiling electric kettle with auto shut-off feature.",
+  },
+  {
+    id: "11",
+    name: "Backpack",
+    image: "https://source.unsplash.com/featured/800x600/?backpack",
+    category: "Accessories",
+    price: 49.99,
+    rating: 4.5,
+    reviews: 130,
+    description: "Spacious and durable backpack for everyday use.",
+  },
+  {
+    id: "12",
+    name: "Digital Camera",
+    image: "https://source.unsplash.com/featured/800x600/?digital+camera",
+    category: "Photography",
+    price: 599.99,
+    rating: 4.7,
+    reviews: 210,
+    description: "Capture stunning photos with this high-resolution camera.",
+  },
+  {
+    id: "13",
+    name: "Gaming Chair",
+    image: "https://source.unsplash.com/featured/800x600/?gaming+chair",
+    category: "Furniture",
+    price: 249.99,
+    rating: 4.6,
+    reviews: 75,
+    description: "Ergonomic gaming chair with adjustable height and recline.",
+  },
+  {
+    id: "14",
+    name: "Electric Toothbrush",
+    image: "https://source.unsplash.com/featured/800x600/?electric+toothbrush",
+    category: "Personal Care",
+    price: 39.99,
+    rating: 4.4,
+    reviews: 90,
+    description: "Advanced electric toothbrush for a deeper clean.",
+  },
+  {
+    id: "15",
+    name: "Office Chair",
+    image: "https://source.unsplash.com/featured/800x600/?office+chair",
+    category: "Furniture",
+    price: 199.99,
+    rating: 4.5,
+    reviews: 120,
+    description: "Comfortable office chair with lumbar support.",
+  },
+  {
+    id: "16",
+    name: "Portable Charger",
+    image: "https://source.unsplash.com/featured/800x600/?portable+charger",
+    category: "Mobile",
+    price: 19.99,
+    rating: 4.8,
+    reviews: 300,
+    description: "Compact and high-capacity portable charger for devices.",
+  },
+  {
+    id: "17",
+    name: "Yoga Mat",
+    image: "https://source.unsplash.com/featured/800x600/?yoga+mat",
+    category: "Fitness",
+    price: 19.99,
+    rating: 4.6,
+    reviews: 100,
+    description: "Non-slip yoga mat perfect for all fitness routines.",
+  },
+  {
+    id: "18",
+    name: "Tablet",
+    image: "https://source.unsplash.com/featured/800x600/?tablet",
+    category: "Electronics",
+    price: 399.99,
+    rating: 4.5,
+    reviews: 150,
+    description: "Lightweight tablet with a high-resolution display.",
+  },
+  {
+    id: "19",
+    name: "Electric Scooter",
+    image: "https://source.unsplash.com/800x600/?bluetooth,speaker",
+    category: "Transportation",
+    price: 299.99,
+    rating: 4.3,
+    reviews: 70,
+    description: "Eco-friendly electric scooter for urban commutes.",
+  },
+  {
+    id: "20",
+    name: "Desk Organizer",
+    image: "https://source.unsplash.com/featured/800x600/?desk+organizer",
+    category: "Home",
+    price: 14.99,
+    rating: 4.2,
+    reviews: 40,
+    description: "Keep your workspace tidy with this stylish desk organizer.",
+  },
+];
 
 export default function Products() {
   return (
     <div>
-      
+      <Filter />
+      {/* product listings start */}
+      <section className="px-3 mt-16">
+        <ProductListings products={products} />
+      </section>
+      {/* product listings end */}
     </div>
-  )
+  );
 }

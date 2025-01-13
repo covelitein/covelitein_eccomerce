@@ -12,7 +12,7 @@ export default function UserStats() {
       {userStats.map((stat, idx) => (
         <Card key={idx}>
           <CardHeader className="p-4 pb-2">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between">
               <h3 className="text-lg font-semibold text-gray-700">
                 {stat.title}
               </h3>

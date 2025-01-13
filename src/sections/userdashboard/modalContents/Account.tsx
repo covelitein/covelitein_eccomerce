@@ -42,7 +42,7 @@ export default function Account() {
   });
 
   return (
-    <div className="mt-5 px-4 md:px-6 lg:px-8">
+    <div className="mt-5 sm:px-4 md:px-6 lg:px-8">
       {/* Profile Image Section */}
       <div className="relative mb-4 flex justify-center">
         {selectedFile ? (

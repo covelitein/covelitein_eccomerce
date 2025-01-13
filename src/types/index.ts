@@ -32,3 +32,17 @@ export type ImageCropperProps = {
   maxWidth?: number;
   quality?: number;
 };
+
+export interface Option {
+  value: string;
+  label: string;
+}
+
+export interface MultiSelectProps {
+  placeholder?: string;
+  emptyMessage?: string;
+  loadingMessage?: string;
+  onLoadOptions: (inputValue: string) => Promise<Option[]>;
+  onChange?: (values: string[]) => void;
+  maxSelections?: number;
+}
