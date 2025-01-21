@@ -12,7 +12,7 @@ export default function Register() {
         <div className="h-full lg:col-span-2 px-5 sm:px-8 overflow-y-scroll">
           <div className="flex flex-col py-10 h-full lg:w-2/3 sm:w-11/12 w-full mx-auto">
             {/* Heading */}
-            <div className="mb-3 lg:text-left">
+            <div className="mb-3 lg:text-left sm:mt-10">
               <h3 className="text-2xl sm:text-3xl font-semibold text-black">
                 Begin your journey now!
               </h3>

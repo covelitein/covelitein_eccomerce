@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  email     String     @unique
+  password  String?
+  firstName String
+  lastName  String
+  phone     String?    @unique
+  address   String
+  role      Role       @default(customer)
+  image     String?
+  accounts  Account[]
+  sessions  Session[]
+  wishlist  Product[]
+  carts     Cart[] // New relation to the Cart model
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Purchase  Purchase[]
+}
+
+model Category {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  Product Product[]
+}
+
+model Product {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String   @db.ObjectId
+  price      Int
+
+  User         User?          @relation(fields: [userId], references: [id])
+  userId       String?        @db.ObjectId
+  Cart         Cart[]
+  PurchaseItem PurchaseItem[]
+}
+
+model Cart {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  productId String   @db.ObjectId
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Purchase {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String         @db.ObjectId
+  createdAt   DateTime       @default(now())
+  totalAmount Int 
+  items       PurchaseItem[]
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model PurchaseItem {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  purchaseId String @db.ObjectId
+  productId  String @db.ObjectId
+  quantity   Int    @default(1)
+  price      Int
+
+  purchase Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+  product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  owner
+  customer
+}

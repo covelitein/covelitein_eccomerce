@@ -51,21 +51,21 @@ export function ProductCard({ product, onAddToCart, onViewDetails }: ProductCard
         <div className="mt-4 flex justify-between items-center">
           {/* Add to Cart Button */}
           <Button
-            className="h-9 w-32 bg-green-500 text-white hover:bg-green-600"
+            className="h-9 w-32 bg-green-500 text-white hover:bg-green-600 text-sm"
             onClick={() => onAddToCart(product)}
           >
-            <ShoppingCart className="w-4 h-4 mr-1" />
+            <ShoppingCart className="mr-1" />
             Add to Cart
           </Button>
 
           {/* View Details Button */}
           <Button
             variant="ghost"
-            className="h-9 w-32 text-blue-500 hover:underline flex justify-center items-center"
+            className="h-9 w-32 text-blue-500 hover:underline flex justify-center items-center text-sm"
             onClick={() => onViewDetails(product.id)}
           >
             View Details
-            <ChevronRight className="w-4 h-4 ml-1" />
+            <ChevronRight className="ml-1" />
           </Button>
         </div>
       </div>

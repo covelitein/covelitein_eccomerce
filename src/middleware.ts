@@ -1,17 +1,50 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-export function middleware(request: NextRequest) {
+// Secret for JWT (same as in your next-auth configuration)
+const secret = process.env.NEXTAUTH_SECRET;
+
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname === "/") {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // List of private routes
+  const protectedRoutes = [
+    "/dashboard",
+    "/orders",
+    "/products",
+    "/profile",
+    "/wishlist",
+  ];
+
+  // Check if the requested route is protected
+  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+    // Attempt to retrieve the session token
+    const session = await getToken({req: request, secret});
+
+    if (!session) {
+      // Redirect unauthenticated users to the login page
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("redirect", pathname); // Preserve the intended destination
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
   return NextResponse.next();
 }
 
-// Apply middleware to all routes
+// Apply the middleware to the specified routes
 export const config = {
-  matcher: ["/"],
+  matcher: [
+    "/",
+    "/dashboard/:path*",
+    "/orders/:path*",
+    "/products/:path*",
+    "/profile/:path*",
+    "/wishlist/:path*",
+  ],
 };

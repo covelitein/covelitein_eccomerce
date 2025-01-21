@@ -14,12 +14,16 @@ import { Cog, User, LogOut, Bell, Sun, Moon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useSession } from "next-auth/react";
+import { useLogout } from "@/hooks/use-logout";
 
 export default function Header() {
-  const router = useRouter();
-  const [auth, setAuth] = useState<boolean>(true);
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const headerRef = useRef<HTMLDivElement | null>(null);
+  const { data: session } = useSession();
+  const {onlogout} = useLogout()
+
+  console.log(session);
 
   const toggleDarkMode = () => setDarkMode((prev) => !prev);
 
@@ -70,8 +74,14 @@ export default function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="h-10 w-10 rounded-full cursor-pointer">
-              <AvatarImage src="/illustrations/user-1.jpg" alt="User Avatar" />
-              <AvatarFallback>JD</AvatarFallback>
+              <AvatarImage
+                src={session?.user.image ?? ""}
+                alt={session?.user.firstName ?? ""}
+              />
+              <AvatarFallback>
+                {session?.user.firstName.split("")[0]}
+                {session?.user.lastName.split("")[0]}
+              </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -90,7 +100,7 @@ export default function Header() {
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={onlogout}>
               <LogOut className="w-5 h-5 mr-2 text-gray-600" />
               Logout
             </DropdownMenuItem>

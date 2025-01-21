@@ -212,7 +212,7 @@ export default function Products() {
     <div>
       <Filter />
       {/* product listings start */}
-      <section className="px-3 mt-16">
+      <section className="px-3 mt-9">
         <ProductListings products={products} />
       </section>
       {/* product listings end */}

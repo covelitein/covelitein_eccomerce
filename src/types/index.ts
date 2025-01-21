@@ -4,6 +4,26 @@ export interface Step {
   icon?: React.ReactNode;
 }
 
+export interface User {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  address: string;
+  password: string;
+  confirm: string;
+}
+
+export type UserProps = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  password: string;
+  confirm: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -22,7 +42,7 @@ export type AspectRatio = {
   label: string;
 };
 
-export type CropShape = 'rect' | 'round';
+export type CropShape = "rect" | "round";
 
 export type ImageCropperProps = {
   onCropComplete?: (croppedImage: string) => void;

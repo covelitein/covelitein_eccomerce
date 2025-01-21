@@ -2,19 +2,24 @@ import { z } from "zod";
 
 export const registerSchema = z
   .object({
-    firstname: z.string().min(1, { message: "compulsory field" }),
-    lastname: z.string().min(2, { message: "compulsory field" }),
+    firstName: z.string().min(1, { message: "compulsory field" }),
+    lastName: z.string().min(1, { message: "compulsory field" }),
     email: z.string().email("invalid email"),
-    phone: z.string().min(11, { message: "enter a valid number" }),
-    gender: z.string().min(1, { message: "select gender" }),
-    username: z.string().min(1, { message: "compulsory field" }),
+    phone: z.string().min(1, { message: "compulsory field" }),
+    address: z.string().min(11, { message: "compulsory field" }),
     password: z
       .string()
-      .min(6, { message: "password should be 6 digits or more" }),
+      .min(8, { message: "Password must be at least 8 characters long." })
+      .regex(/[A-Z]/, {
+        message: "Password must contain at least one uppercase letter.",
+      })
+      .regex(/[a-z]/, {
+        message: "Password must contain at least one lowercase letter.",
+      })
+      .regex(/[!@#$%^&*(),.?":{}|<>]/, {
+        message: "Password must contain at least one special character.",
+      }),
     confirm: z.string(),
-    agreeTerms: z.boolean().refine((val) => val === true, {
-      message: "check the box to accept TCs",
-    }),
   })
   .refine((data) => data.password === data.confirm, {
     message: "Passwords don't match",
@@ -22,6 +27,6 @@ export const registerSchema = z
   });
 
 export const loginSchema = z.object({
-  email: z.string().min(1, 'Enter registered email').email("invalid email"),
+  email: z.string().min(1, "Enter registered email").email("invalid email"),
   password: z.string().min(1, "Enter your password"),
 });

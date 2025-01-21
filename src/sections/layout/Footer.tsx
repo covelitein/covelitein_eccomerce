@@ -6,18 +6,24 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
+import { useLogout } from "@/hooks/use-logout";
 import { Power } from "lucide-react";
 
 export function Footer({
   user,
 }: {
-  user: {
-    name: string;
-    lastname: string;
-    email: string;
-    avatar?: string; // Optional avatar for fallback handling
-  };
+  user:
+    | {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        image: string;
+        role: string;
+      }
+    | undefined;
 }) {
+  const { onlogout } = useLogout();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -27,18 +33,26 @@ export function Footer({
         >
           <Avatar className="h-10 w-10 rounded-full">
             <AvatarImage
-              src={user.avatar || "/fallback-avatar.png"}
-              alt={user.name ?? ""}
+              src={user?.image || "/fallback-avatar.png"}
+              alt={user?.firstName ?? ""}
             />
-            <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+            <AvatarFallback className="rounded-lg">
+              {user?.firstName.split("")[0]}
+              {user?.lastName.split("")[0]}
+            </AvatarFallback>
           </Avatar>
           <div className="grid flex-1 text-left text-sm leading-tight ml-3">
-            <span className="truncate font-semibold">{user.name ?? ""}</span>
             <span className="truncate font-semibold">
-              {user.lastname ?? ""}
+              {user?.firstName ?? ""}
+            </span>
+            <span className="truncate font-semibold">
+              {user?.lastName ?? ""}
             </span>
           </div>
-          <div className="px-2 py-2 rounded-full text-white bg-blue-600 hover:bg-blue-600/70">
+          <div
+            onClick={onlogout}
+            className="px-2 py-2 rounded-full text-white bg-blue-600 hover:bg-blue-600/70"
+          >
             <Power size={24} className="ml-auto text-xl" />
           </div>
         </SidebarMenuButton>

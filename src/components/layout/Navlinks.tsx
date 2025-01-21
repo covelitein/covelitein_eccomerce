@@ -20,13 +20,14 @@ import {
 import { useRouter } from "next/navigation";
 
 export function Navlinks({
-  items,
+  items
 }: {
   items: {
     title: string;
     url: string;
     icon?: LucideIcon;
     isActive?: boolean;
+    isAdmin?: boolean;
     items?: {
       title: string;
       url: string;
@@ -49,13 +50,18 @@ export function Navlinks({
     setActiveItem(title);
   };
 
+  // Filter items based on isAdmin property
+  const filteredItems = items.filter(
+    (item) => item?.isAdmin === undefined || item.isAdmin === true
+  );
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel className="text-sm text-gray-400">
         Platform
       </SidebarGroupLabel>
       <SidebarMenu className="mt-2">
-        {items.map((item) => (
+        {filteredItems.map((item) => (
           <Collapsible
             key={item.title}
             asChild
@@ -80,10 +86,12 @@ export function Navlinks({
                 </CollapsibleTrigger>
               </SidebarMenuItem>
             ) : (
-              <SidebarMenuItem onClick={() => {
-                handleNavigation(item.url);
-                handleActiveItem(item.title);
-              }}>
+              <SidebarMenuItem
+                onClick={() => {
+                  handleNavigation(item.url);
+                  handleActiveItem(item.title);
+                }}
+              >
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton
                     tooltip={item.title}
@@ -107,7 +115,7 @@ export function Navlinks({
                         <SidebarMenuSubButton asChild>
                           <a href={subItem.url}>
                             <span>{subItem.title}</span>
-                          </a>
+                          </a> 
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
