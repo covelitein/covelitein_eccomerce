@@ -16,3 +16,5 @@ if (process.env.NODE_ENV !== "production") globalThis.prisma = client
 export const useDb = () => {
   return client
 }
+
+export const prismaClient = client 

@@ -1,4 +1,4 @@
-import { useDb } from "@/prisma";
+import { prismaClient, useDb } from "@/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { AuthOptions } from "next-auth";
@@ -29,7 +29,7 @@ declare module "next-auth" {
 }
 
 const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(useDb()),
+  adapter: PrismaAdapter(prismaClient),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
