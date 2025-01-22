@@ -72,7 +72,7 @@ export function useRequest<T = any>(url: string, config: RequestConfig = {}) {
     return () => {
       mounted = false;
     };
-  }, [url, shouldRefetch]);
+  }, [url, shouldRefetch, config]);
 
   // Mutation function for POST, PUT, DELETE
   const execute = async (mutationConfig: RequestConfig = {}) => {

@@ -1,4 +1,5 @@
-import { useDb } from "@/prisma";
+// dbhooks/useUser.ts
+import { prismaClient } from "@/prisma";
 
 interface User {
   firstName: string;
@@ -9,17 +10,27 @@ interface User {
   phone: string;
 }
 
-export default () => {
+export default function userHandler() {
+  /**
+   * Registers a new user in the database.
+   * @param userParams - The user data to be saved.
+   * @returns The created user.
+   */
   async function registerUser(userParams: User) {
-    const user = await useDb().user.create({
+    const user = await prismaClient.user.create({
       data: userParams,
     });
 
     return user;
   }
 
+  /**
+   * Fetches a user by their email address.
+   * @param email - The user's email address.
+   * @returns The user if found, or null.
+   */
   async function getUserByEmail(email: string) {
-    const user = await useDb().user.findUnique({
+    const user = await prismaClient.user.findUnique({
       where: {
         email,
       },
@@ -28,8 +39,9 @@ export default () => {
     return user;
   }
 
+  // Expose the methods for external use.
   return {
     registerUser,
     getUserByEmail,
   };
-};
+}

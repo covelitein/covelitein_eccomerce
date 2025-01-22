@@ -1,4 +1,4 @@
-import { prismaClient, useDb } from "@/prisma";
+import { prismaClient } from "@/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { AuthOptions } from "next-auth";
@@ -53,7 +53,7 @@ const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const db = useDb();
+        const db = prismaClient;
         
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Email and password are required.");
@@ -97,7 +97,7 @@ const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ account, profile, user }) {
-      const db = useDb();
+      const db = prismaClient;
 
       if (account?.provider === "google" && profile?.email) {
         try {
@@ -164,7 +164,7 @@ const authOptions: AuthOptions = {
 
       // Token refresh - get fresh data if needed
       if (trigger === "update" || trigger === "signIn") {
-        const db = useDb();
+        const db = prismaClient;
         const freshUser = await db.user.findUnique({
           where: { email: token.email as string },
         });

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import useUser from "@/dbhooks/useUser";
 import { parsedBody } from "@/serverUtils";
-import useError from "@/composed/useError";
+import errorHandler from "@/composed/errorHandler";
+import userHandler from "@/dbhooks/useUser";
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,11 +20,11 @@ export async function POST(request: NextRequest) {
       })
       .parse(body);
 
-    const existing = await useUser().getUserByEmail(data.email);
+    const existing = await userHandler().getUserByEmail(data.email);
     if (existing) throw new Error("user with email exist!");
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
-    const user = await useUser().registerUser({
+    const user = await userHandler().registerUser({
       ...data,
       password: hashedPassword,
     });
@@ -35,6 +35,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (e) {
     console.log("error", e);
-    return NextResponse.json(useError().ValidationError(e), { status: 400 });
+    return NextResponse.json(errorHandler().ValidationError(e), { status: 400 });
   }
 }
