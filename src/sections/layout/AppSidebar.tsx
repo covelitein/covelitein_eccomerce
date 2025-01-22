@@ -6,6 +6,7 @@ import {
   ClipboardList,
   ShoppingBag,
   List,
+  Grid,
 } from "lucide-react";
 
 import {
@@ -36,7 +37,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/dashboard",
         icon: Grid2x2,
         isActive: true,
-        isAdmin: false,
       },
       {
         title: "Products",
@@ -78,6 +78,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: ClipboardList,
         isAdmin: true,
       },
+      {
+        title: "Manage Categories",
+        url: "/manage-categories",
+        icon: Grid,
+        isAdmin: true,
+      },
     ],
   };
   return (
@@ -98,7 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenu>
         </SidebarHeader>
         <SidebarContent className="bg-white px-2">
-          <Navlinks items={data.navMain} />
+          <Navlinks role={session?.user.role} items={data.navMain} />
         </SidebarContent>
         <SidebarFooter className="p-4 bg-white">
           <Footer user={session?.user} />

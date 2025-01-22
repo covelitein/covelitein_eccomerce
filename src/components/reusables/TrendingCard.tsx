@@ -36,7 +36,6 @@ export function TrendingCard({ product }: TrendingProductCardProps) {
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           {product.name}
         </h3>
-        <StarRating rating={product.rating} reviews={product.reviews} />
         <div className="mt-2 mb-3">
           <Button className="h-7 w-full">
             view

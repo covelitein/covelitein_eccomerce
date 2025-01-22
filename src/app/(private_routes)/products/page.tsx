@@ -10,8 +10,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?wireless+headphones",
     category: "Electronics",
     price: 99.99,
-    rating: 4.5,
-    reviews: 120,
     description: "High-quality wireless headphones with noise cancellation.",
   },
   {
@@ -20,8 +18,6 @@ const products: Product[] = [
     image: "https://images.unsplash.com/featured/800x600/?smartwatch",
     category: "Wearables",
     price: 149.99,
-    rating: 4.2,
-    reviews: 80,
     description:
       "Feature-packed smart watch with fitness tracking capabilities.",
   },
@@ -31,8 +27,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?running+shoes",
     category: "Footwear",
     price: 79.99,
-    rating: 4.8,
-    reviews: 200,
     description: "Lightweight and comfortable running shoes for athletes.",
   },
   {
@@ -41,8 +35,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?bluetooth+speaker",
     category: "Audio",
     price: 59.99,
-    rating: 4.3,
-    reviews: 150,
     description: "Portable Bluetooth speaker with excellent sound quality.",
   },
   {
@@ -51,8 +43,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?gaming+laptop",
     category: "Computers",
     price: 1299.99,
-    rating: 4.7,
-    reviews: 300,
     description: "High-performance gaming laptop with cutting-edge graphics.",
   },
   {
@@ -61,8 +51,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?desk+lamp",
     category: "Home",
     price: 29.99,
-    rating: 4.0,
-    reviews: 50,
     description: "Adjustable LED desk lamp with multiple brightness settings.",
   },
   {
@@ -71,8 +59,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?fitness+tracker",
     category: "Wearables",
     price: 49.99,
-    rating: 4.4,
-    reviews: 220,
     description: "Track your fitness goals with this sleek fitness tracker.",
   },
   {
@@ -81,8 +67,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?wireless+keyboard",
     category: "Accessories",
     price: 39.99,
-    rating: 4.6,
-    reviews: 190,
     description: "Compact and durable wireless keyboard for easy typing.",
   },
   {
@@ -91,8 +75,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?smartphone",
     category: "Mobile",
     price: 899.99,
-    rating: 4.9,
-    reviews: 1000,
     description: "Latest-generation smartphone with powerful features.",
   },
   {
@@ -101,8 +83,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?electric+kettle",
     category: "Kitchen",
     price: 24.99,
-    rating: 4.3,
-    reviews: 85,
     description: "Fast-boiling electric kettle with auto shut-off feature.",
   },
   {
@@ -111,8 +91,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?backpack",
     category: "Accessories",
     price: 49.99,
-    rating: 4.5,
-    reviews: 130,
     description: "Spacious and durable backpack for everyday use.",
   },
   {
@@ -121,8 +99,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?digital+camera",
     category: "Photography",
     price: 599.99,
-    rating: 4.7,
-    reviews: 210,
     description: "Capture stunning photos with this high-resolution camera.",
   },
   {
@@ -131,8 +107,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?gaming+chair",
     category: "Furniture",
     price: 249.99,
-    rating: 4.6,
-    reviews: 75,
     description: "Ergonomic gaming chair with adjustable height and recline.",
   },
   {
@@ -141,8 +115,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?electric+toothbrush",
     category: "Personal Care",
     price: 39.99,
-    rating: 4.4,
-    reviews: 90,
     description: "Advanced electric toothbrush for a deeper clean.",
   },
   {
@@ -151,8 +123,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?office+chair",
     category: "Furniture",
     price: 199.99,
-    rating: 4.5,
-    reviews: 120,
     description: "Comfortable office chair with lumbar support.",
   },
   {
@@ -161,8 +131,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?portable+charger",
     category: "Mobile",
     price: 19.99,
-    rating: 4.8,
-    reviews: 300,
     description: "Compact and high-capacity portable charger for devices.",
   },
   {
@@ -171,8 +139,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?yoga+mat",
     category: "Fitness",
     price: 19.99,
-    rating: 4.6,
-    reviews: 100,
     description: "Non-slip yoga mat perfect for all fitness routines.",
   },
   {
@@ -181,8 +147,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?tablet",
     category: "Electronics",
     price: 399.99,
-    rating: 4.5,
-    reviews: 150,
     description: "Lightweight tablet with a high-resolution display.",
   },
   {
@@ -191,8 +155,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/800x600/?bluetooth,speaker",
     category: "Transportation",
     price: 299.99,
-    rating: 4.3,
-    reviews: 70,
     description: "Eco-friendly electric scooter for urban commutes.",
   },
   {
@@ -201,8 +163,6 @@ const products: Product[] = [
     image: "https://source.unsplash.com/featured/800x600/?desk+organizer",
     category: "Home",
     price: 14.99,
-    rating: 4.2,
-    reviews: 40,
     description: "Keep your workspace tidy with this stylish desk organizer.",
   },
 ];

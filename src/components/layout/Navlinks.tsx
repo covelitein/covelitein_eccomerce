@@ -20,7 +20,8 @@ import {
 import { useRouter } from "next/navigation";
 
 export function Navlinks({
-  items
+  items,
+  role,
 }: {
   items: {
     title: string;
@@ -35,8 +36,10 @@ export function Navlinks({
     isModalEnabled?: boolean;
     openModal?: () => void;
   }[];
+  role?: string;
 }) {
   const router = useRouter();
+  const isAdmin = role === "owner";
 
   // State to track the active menu item
   const [activeItem, setActiveItem] = useState<string | null>(null);
@@ -52,7 +55,7 @@ export function Navlinks({
 
   // Filter items based on isAdmin property
   const filteredItems = items.filter(
-    (item) => item?.isAdmin === undefined || item.isAdmin === true
+    (item) => item?.isAdmin === undefined || item.isAdmin === isAdmin
   );
 
   return (
@@ -115,7 +118,7 @@ export function Navlinks({
                         <SidebarMenuSubButton asChild>
                           <a href={subItem.url}>
                             <span>{subItem.title}</span>
-                          </a> 
+                          </a>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}

@@ -13,8 +13,6 @@ export default function TrendingProduct() {
       image:
         "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
       category: "Electronics",
-      rating: 4.5,
-      reviews: 128,
       discount: 0.15,
       trending: true,
     },
@@ -27,8 +25,6 @@ export default function TrendingProduct() {
       image:
         "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
       category: "Wearables",
-      rating: 4.8,
-      reviews: 89,
       trending: true,
     },
     {
@@ -40,8 +36,6 @@ export default function TrendingProduct() {
       image:
         "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
       category: "Electronics",
-      rating: 4.2,
-      reviews: 56,
       discount: 0.2,
     },
   ];

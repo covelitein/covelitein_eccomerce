@@ -31,8 +31,6 @@ export interface Product {
   description: string;
   image: string;
   category: string;
-  rating: number;
-  reviews: number;
   discount?: number;
   trending?: boolean;
 }

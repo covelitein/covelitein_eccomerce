@@ -44,8 +44,6 @@ export function ProductCard({ product, onAddToCart, onViewDetails }: ProductCard
         <h3 className="text-lg font-semibold text-gray-900 mb-2 truncate">
           {product.name}
         </h3>
-        {/* Rating and Reviews */}
-        <StarRating rating={product.rating} reviews={product.reviews} />
 
         {/* Product Actions */}
         <div className="mt-4 flex justify-between items-center">

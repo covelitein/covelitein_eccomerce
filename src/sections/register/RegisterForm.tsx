@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PhoneInput } from "@/components/ui/phone-input";
@@ -21,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/components/toast/use-toast";
 import { UserProps } from "@/types";
 import ToastComponent from "@/components/toast/toast-component";
-import { Loader2 } from 'lucide-react';
+import { Loader2 } from "lucide-react";
 
 export default function RegisterForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
@@ -49,12 +44,12 @@ export default function RegisterForm() {
     },
   });
 
-  const router = useRouter()
+  const router = useRouter();
 
   const { execute: createUser, loading: creating } =
     useRequest("/api/register");
 
-    const { toasts, addToast } = useToast();
+  const { toasts, addToast } = useToast();
 
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     console.log(values);
@@ -64,16 +59,24 @@ export default function RegisterForm() {
       data: values as UserProps,
       onSuccess: (data) => {
         console.log(data);
-        addToast({ message: 'Registration successful!', type: 'success', showLoader: true })
-        router.push('/login')
+        addToast({
+          message: "Registration successful!",
+          type: "success",
+          showLoader: true,
+        });
+        router.push("/login");
       },
       onError: (error) => {
         const errorMessage =
-        (error as any).response?.data?.message || // Server-provided error message
-        (error as any).response?.data?.error || // Alternative error field
-        (error as any).message || // Fallback to Axios' default message
-        "An unexpected error occurred";
-        addToast({ message: `${errorMessage}`, type: 'danger', showLoader: true })
+          (error as any).response?.data?.message || // Server-provided error message
+          (error as any).response?.data?.error || // Alternative error field
+          (error as any).message || // Fallback to Axios' default message
+          "An unexpected error occurred";
+        addToast({
+          message: `${errorMessage}`,
+          type: "danger",
+          showLoader: true,
+        });
       },
     });
   };
@@ -252,14 +255,18 @@ export default function RegisterForm() {
             />
           </div>
 
-          <Button disabled={creating} type="submit" className="mt-4 w-full py-6">
+          <Button
+            disabled={creating}
+            type="submit"
+            className="mt-4 w-full py-6"
+          >
             {creating ? (
               <span className="flex items-center gap-2">
                 <Loader2 className="h-5 w-5 animate-spin" />
                 Registering
               </span>
             ) : (
-              'Register'
+              "Register"
             )}
           </Button>
         </form>
@@ -273,7 +280,7 @@ export default function RegisterForm() {
             type={toast.type}
             duration={toast.duration}
             showLoader={toast.showLoader}
-            onDismiss={() => console.log('Toast dismissed')}
+            onDismiss={() => console.log("Toast dismissed")}
           />
         ))}
       </div>

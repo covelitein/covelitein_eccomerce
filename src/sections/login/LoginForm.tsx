@@ -37,10 +37,6 @@ export default function LoginForm() {
     await signIn("google", { callbackUrl: "/dashboard" });
   };
 
-  const handleFacebookSignIn = async () => {
-    await signIn("facebook", { callbackUrl: "/dashboard" });
-  };
-
   return (
     <section className="">
       <Form {...form}>
@@ -106,20 +102,13 @@ export default function LoginForm() {
         </form>
       </Form>
       <div className="mt-7">
-        <div className="grid sm:grid-cols-2 grid-cols-1 mb-4 gap-3">
+        <div className=" mb-4 gap-3">
           <button
-            className="border border-[#e5eaf2] rounded-md py-2 px-4 flex items-center gap-[10px] text-[#424242] hover:bg-gray-50 transition-all duration-200 sm:text-sm"
+            className="border border-[#e5eaf2] rounded-md py-2 px-4 flex items-center gap-[10px] text-[#424242] hover:bg-gray-50 transition-all duration-200 sm:text-sm w-full justify-center"
             onClick={handleGoogleSignIn}
           >
             <FcGoogle className="text-2xl" />
             Sign in with Google
-          </button>
-          <button
-            className="border border-[#e5eaf2] rounded-md py-2 px-4 flex items-center gap-[10px] text-[#424242] hover:bg-gray-50 transition-all duration-200 sm:text-sm"
-            onClick={handleFacebookSignIn}
-          >
-            <FaFacebook className="text-2xl text-blue-600" />
-            Sign in with Facebook
           </button>
         </div>
         <p className="text-center sm:text-sm">

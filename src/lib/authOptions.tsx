@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import FacebookProvider from "next-auth/providers/facebook";
 
 declare module "next-auth" {
   interface Session {
@@ -41,10 +40,6 @@ const authOptions: AuthOptions = {
           response_type: "code",
         },
       },
-    }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_APP_ID as string,
-      clientSecret: process.env.FACEBOOK_APP_SECRET as string,
     }),
     CredentialsProvider({
       name: "credentials",

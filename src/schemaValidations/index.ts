@@ -30,3 +30,17 @@ export const loginSchema = z.object({
   email: z.string().min(1, "Enter registered email").email("invalid email"),
   password: z.string().min(1, "Enter your password"),
 });
+
+export const productSchema = z.object({
+  name: z.string().min(1, { message: "compulsory field" }),
+  price: z.number().min(1, { message: "compulsory field" }),
+  description: z.string().min(1, { message: "compulsory field" }),
+  image: z.string().url({ message: "invalid url" }),
+  category: z.string().min(1, { message: "compulsory field" }),
+  discount: z.number().optional(),
+  trending: z.boolean().optional(),
+})
+
+export const categorySchema = z.object({
+  name: z.string().min(1, { message: "compulsory field" }),
+})
