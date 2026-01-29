@@ -8,10 +8,6 @@ const secret = process.env.NEXTAUTH_SECRET;
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (pathname === "/") {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-
   // List of private routes
   const protectedRoutes = [
     "/dashboard",
@@ -19,6 +15,9 @@ export async function middleware(request: NextRequest) {
     "/products",
     "/profile",
     "/wishlist",
+    "/manage-products",
+    "/manage-orders",
+    "/manage-categories",
   ];
 
   // Check if the requested route is protected
@@ -40,11 +39,13 @@ export async function middleware(request: NextRequest) {
 // Apply the middleware to the specified routes
 export const config = {
   matcher: [
-    "/",
     "/dashboard/:path*",
     "/orders/:path*",
     "/products/:path*",
     "/profile/:path*",
     "/wishlist/:path*",
+    "/manage-products/:path*",
+    "/manage-orders/:path*",
+    "/manage-categories/:path*",
   ],
 };

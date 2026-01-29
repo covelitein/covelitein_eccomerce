@@ -21,5 +21,5 @@ export const useToast = () => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
   };
 
-  return { toasts, addToast };
+  return { toasts, addToast, removeToast };
 };

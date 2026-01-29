@@ -21,11 +21,13 @@ export default function Header() {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const { data: session } = useSession();
-  const {onlogout} = useLogout()
-
-  console.log(session);
+  const { onlogout } = useLogout();
 
   const toggleDarkMode = () => setDarkMode((prev) => !prev);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, [darkMode]);
 
   useEffect(() => {
     const updateCSSVariable = () => {
@@ -75,12 +77,12 @@ export default function Header() {
           <DropdownMenuTrigger asChild>
             <Avatar className="h-10 w-10 rounded-full cursor-pointer">
               <AvatarImage
-                src={session?.user.image ?? ""}
-                alt={session?.user.firstName ?? ""}
+                src={session?.user.image ?? "/fallback-avatar.png"}
+                alt={session?.user.firstName ?? "Profile avatar"}
               />
               <AvatarFallback>
-                {session?.user.firstName.split("")[0]}
-                {session?.user.lastName.split("")[0]}
+                {(session?.user.firstName ?? "U").charAt(0)}
+                {(session?.user.lastName ?? "S").charAt(0)}
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
@@ -89,7 +91,8 @@ export default function Header() {
             className="mt-3 p-2 shadow-lg rounded-lg bg-white dark:bg-gray-800 max-sm:w-[var(--dropdown-width)] w-[12rem] max-sm:ml-1.5"
           >
             <DropdownMenuLabel className="text-lg font-semibold">
-              John Doe
+              {session?.user.firstName ?? "Account"}{" "}
+              {session?.user.lastName ?? ""}
             </DropdownMenuLabel>
             <DropdownMenuItem>
               <User className="w-5 h-5 mr-2 text-gray-600" />

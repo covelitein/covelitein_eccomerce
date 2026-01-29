@@ -38,6 +38,7 @@ export default function Filter() {
   };
 
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <section className="px-3">
@@ -47,7 +48,11 @@ export default function Filter() {
       <main className="grid md:grid-cols-3 grid-cols-1 gap-4">
         {/* search by product name start */}
         <div className="">
-          <Input placeholder="Search by name..." />
+          <Input
+            placeholder="Search by name..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
         </div>
         {/* search by product name end */}
 
@@ -64,7 +69,10 @@ export default function Filter() {
 
         {/* search button start */}
         <div className="grid grid-cols-2 gap-4">
-          <Button className="border-dashed bg-transparent border hover:bg-transparent text-gray-600">
+          <Button
+            className="border-dashed bg-transparent border hover:bg-transparent text-gray-600"
+            disabled={!selectedValues.length && !searchTerm}
+          >
             <span>Filter</span>
             <MixerHorizontalIcon />
           </Button>

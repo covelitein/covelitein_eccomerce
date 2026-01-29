@@ -11,6 +11,7 @@ const getTimestamp = () => {
 };
 
 interface RequestConfig extends AxiosRequestConfig {
+  enabled?: boolean;
   onSuccess?: (data: any, timing: number) => void;
   onError?: (error: Error) => void;
 }
@@ -23,9 +24,10 @@ interface RequestState<T> {
 }
 
 export function useRequest<T = any>(url: string, config: RequestConfig = {}) {
+  const { enabled = true } = config;
   const [state, setState] = useState<RequestState<T>>({
     data: null,
-    loading: true,
+    loading: enabled,
     error: null,
     timing: null
   });
@@ -34,6 +36,10 @@ export function useRequest<T = any>(url: string, config: RequestConfig = {}) {
 
   // Fetch data
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
     let mounted = true;
     const startTime = getTimestamp();
 
@@ -72,7 +78,7 @@ export function useRequest<T = any>(url: string, config: RequestConfig = {}) {
     return () => {
       mounted = false;
     };
-  }, [url, shouldRefetch, config]);
+  }, [url, shouldRefetch, enabled]);
 
   // Mutation function for POST, PUT, DELETE
   const execute = async (mutationConfig: RequestConfig = {}) => {
