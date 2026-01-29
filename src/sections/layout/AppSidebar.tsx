@@ -59,6 +59,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isAdmin: false,
       },
       {
+        title: "Checkout",
+        url: "/checkout",
+        icon: ShoppingBag,
+        isActive: false,
+        isAdmin: false,
+      },
+      {
         title: "Settings",
         url: "/settings",
         icon: Cog,

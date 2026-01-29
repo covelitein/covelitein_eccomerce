@@ -60,6 +60,9 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
             <Button className="bg-green-500 text-white hover:bg-green-600">
               Add to Cart
             </Button>
+            <Button variant="outline" asChild>
+              <Link href="/checkout">Buy now</Link>
+            </Button>
             <Button variant="outline">Save to Wishlist</Button>
           </div>
         </div>
