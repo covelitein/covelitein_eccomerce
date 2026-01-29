@@ -6,16 +6,22 @@ import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemaValidations";
 import { z } from "zod";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/toast/use-toast";
+import ToastComponent from "@/components/toast/toast-component";
+import { Loader2 } from "lucide-react";
 
 export default function LoginForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toasts, addToast, removeToast } = useToast();
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -30,7 +36,30 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    console.log(values);
+    setIsSubmitting(true);
+    const response = await signIn("credentials", {
+      redirect: false,
+      email: values.email,
+      password: values.password,
+      callbackUrl: "/dashboard",
+    });
+
+    if (response?.error) {
+      addToast({
+        message: "Invalid email or password. Please try again.",
+        type: "danger",
+        showLoader: true,
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    addToast({
+      message: "Welcome back!",
+      type: "success",
+      showLoader: true,
+    });
+    router.push(response?.url ?? "/dashboard");
   };
 
   const handleGoogleSignIn = async () => {
@@ -98,9 +127,30 @@ export default function LoginForm() {
               Forgotten password?
             </Link>
           </div>
-          <Button className="mt-4 w-full">Login</Button>
+          <Button className="mt-4 w-full" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Signing in
+              </span>
+            ) : (
+              "Login"
+            )}
+          </Button>
         </form>
       </Form>
+      <div>
+        {toasts.map((toast) => (
+          <ToastComponent
+            key={toast.id}
+            message={toast.message}
+            type={toast.type}
+            duration={toast.duration}
+            showLoader={toast.showLoader}
+            onDismiss={() => removeToast(toast.id)}
+          />
+        ))}
+      </div>
       <div className="mt-7">
         <div className=" mb-4 gap-3">
           <button

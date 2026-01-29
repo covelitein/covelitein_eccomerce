@@ -28,7 +28,7 @@ export default function RegisterForm() {
   };
 
   const toggleConfirmPasswordVisibility = () => {
-    setIsConfirmPasswordVisible(!isPasswordVisible);
+    setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
 
   const form = useForm({
@@ -46,19 +46,19 @@ export default function RegisterForm() {
 
   const router = useRouter();
 
-  const { execute: createUser, loading: creating } =
-    useRequest("/api/register");
+  const { execute: createUser, loading: creating } = useRequest("/api/register", {
+    enabled: false,
+  });
 
-  const { toasts, addToast } = useToast();
+  const { toasts, addToast, removeToast } = useToast();
 
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
-    console.log(values);
+    const { confirm, ...payload } = values;
 
     await createUser({
       method: "POST",
-      data: values as UserProps,
+      data: payload as Omit<UserProps, "confirm">,
       onSuccess: (data) => {
-        console.log(data);
         addToast({
           message: "Registration successful!",
           type: "success",
@@ -280,7 +280,7 @@ export default function RegisterForm() {
             type={toast.type}
             duration={toast.duration}
             showLoader={toast.showLoader}
-            onDismiss={() => console.log("Toast dismissed")}
+            onDismiss={() => removeToast(toast.id)}
           />
         ))}
       </div>

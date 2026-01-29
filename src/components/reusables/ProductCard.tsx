@@ -3,7 +3,6 @@ import { ChevronRight, DollarSign, Flame, ShoppingCart } from "lucide-react";
 import { Product } from "@/types";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { StarRating } from "./StarRatings";
 import { Card } from "../ui/card";
 
 interface ProductCardProps {

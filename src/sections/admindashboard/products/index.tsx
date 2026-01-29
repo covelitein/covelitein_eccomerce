@@ -1,5 +1,4 @@
-import ProductHeader from './ProductHeader';
+import ProductHeader from "./ProductHeader";
+import ProductTable from "./ProductTable";
 
-export {
-    ProductHeader
-}
+export { ProductHeader, ProductTable };
