@@ -55,7 +55,7 @@ model User {
 
 model Category {
   id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
+  name    String    @unique
   Product Product[]
 }
 
@@ -65,6 +65,10 @@ model Product {
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String   @db.ObjectId
   price      Int
+  description String?
+  image       String?
+  discount    Int?
+  trending    Boolean? @default(false)
 
   User         User?          @relation(fields: [userId], references: [id])
   userId       String?        @db.ObjectId
@@ -107,4 +111,22 @@ model PurchaseItem {
 enum Role {
   owner
   customer
+}
+
+model PaymentTransaction {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  reference String        @unique
+  email     String
+  amount    Int
+  currency  String        @default("NGN")
+  status    PaymentStatus @default(pending)
+  metadata  Json?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+enum PaymentStatus {
+  pending
+  success
+  failed
 }

@@ -4,12 +4,11 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { ReactNode } from 'react';
-import { productImages } from '@/sections/userdashboard/Order';
-
 // Define the type for an order
 export interface OrderProps {
   id: string;
   products: string;
+  productImage?: string;
   status: 'Pending' | 'Shipped' | 'Delivered' | 'Cancelled';
   totalPrice: number;
   deliveryETA: string;
@@ -55,7 +54,7 @@ export const columns: ColumnDef<OrderProps>[] = [
     ),
     cell: ({ row }) => {
       const productName = row.getValue('products');
-      const imageUrl = productImages[(productName as string)] || "/images/default_product.jpg";
+      const imageUrl = row.original.productImage || "/images/default_product.jpg";
       return (
         <div className="flex items-center space-x-2">
           <img src={imageUrl} alt={(productName as string)} className="h-8 w-8 rounded" />

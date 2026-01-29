@@ -37,8 +37,8 @@ export function Footer({
               alt={user?.firstName ?? ""}
             />
             <AvatarFallback className="rounded-lg">
-              {user?.firstName.split("")[0]}
-              {user?.lastName.split("")[0]}
+              {(user?.firstName ?? "U").charAt(0)}
+              {(user?.lastName ?? "S").charAt(0)}
             </AvatarFallback>
           </Avatar>
           <div className="grid flex-1 text-left text-sm leading-tight ml-3">

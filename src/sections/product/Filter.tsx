@@ -8,36 +8,22 @@ import { Search } from "lucide-react";
 import React, { useState } from "react";
 
 export default function Filter() {
-  const fetchUsers = async (search: string) => {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    // Mock data
-    const allUsers = [
-      { value: "1", label: "Electronics" },
-      { value: "2", label: "Home & Kitchen" },
-      { value: "3", label: "Clothing" },
-      { value: "4", label: "Footwear" },
-      { value: "5", label: "Accessories" },
-      { value: "6", label: "Beauty & Personal Care" },
-      { value: "7", label: "Fitness & Sports" },
-      { value: "8", label: "Books & Stationery" },
-      { value: "9", label: "Toys & Games" },
-      { value: "10", label: "Groceries" },
-      { value: "11", label: "Automotive" },
-      { value: "12", label: "Pet Supplies" },
-      { value: "13", label: "Baby Products" },
-      { value: "14", label: "Garden & Outdoor" },
-      { value: "15", label: "Health & Wellness" },
-    ];
-
-    // Filter based on search
-    return allUsers.filter((user) =>
-      user.label.toLowerCase().includes(search.toLowerCase())
+  const fetchCategories = async (search: string) => {
+    const response = await fetch("/api/categories");
+    const payload = await response.json();
+    const categories = payload.categories ?? [];
+    const filtered = categories.filter((category: { name: string }) =>
+      category.name.toLowerCase().includes(search.toLowerCase())
     );
+
+    return filtered.map((category: { id: string; name: string }) => ({
+      value: category.id,
+      label: category.name,
+    }));
   };
 
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <section className="px-3">
@@ -47,7 +33,11 @@ export default function Filter() {
       <main className="grid md:grid-cols-3 grid-cols-1 gap-4">
         {/* search by product name start */}
         <div className="">
-          <Input placeholder="Search by name..." />
+          <Input
+            placeholder="Search by name..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
         </div>
         {/* search by product name end */}
 
@@ -55,7 +45,7 @@ export default function Filter() {
         <div className="">
           <MultiSelect
             placeholder="filter by categories..."
-            onLoadOptions={fetchUsers}
+            onLoadOptions={fetchCategories}
             onChange={setSelectedValues}
             maxSelections={3}
           />
@@ -64,7 +54,10 @@ export default function Filter() {
 
         {/* search button start */}
         <div className="grid grid-cols-2 gap-4">
-          <Button className="border-dashed bg-transparent border hover:bg-transparent text-gray-600">
+          <Button
+            className="border-dashed bg-transparent border hover:bg-transparent text-gray-600"
+            disabled={!selectedValues.length && !searchTerm}
+          >
             <span>Filter</span>
             <MixerHorizontalIcon />
           </Button>
