@@ -1,10 +1,11 @@
-import { products } from "@/constants/products";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { getProductsWithFallback } from "@/serverUtils/catalog";
 import Link from "next/link";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const products = await getProductsWithFallback();
   return (
     <main className="bg-white text-gray-900">
       <section className="px-6 py-16 sm:px-10 lg:px-20">

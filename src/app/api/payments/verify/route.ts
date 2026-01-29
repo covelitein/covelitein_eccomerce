@@ -10,6 +10,13 @@ const verifySchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.DATABASE_URL) {
+      return NextResponse.json(
+        { message: "Database not configured." },
+        { status: 500 }
+      );
+    }
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json(

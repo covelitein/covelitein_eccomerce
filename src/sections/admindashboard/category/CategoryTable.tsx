@@ -8,16 +8,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getCategoriesWithFallback } from "@/serverUtils/catalog";
 
-const categories = [
-  { id: "cat-1", name: "Electronics", products: 42, status: "Active" },
-  { id: "cat-2", name: "Home & Kitchen", products: 31, status: "Active" },
-  { id: "cat-3", name: "Accessories", products: 18, status: "Active" },
-  { id: "cat-4", name: "Fitness", products: 9, status: "Draft" },
-  { id: "cat-5", name: "Furniture", products: 12, status: "Active" },
-];
-
-export default function CategoryTable() {
+export default async function CategoryTable() {
+  const categories = await getCategoriesWithFallback();
   return (
     <div className="mt-6 rounded-xl border bg-white">
       <Table>

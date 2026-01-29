@@ -14,6 +14,9 @@ import { categorySchema } from "@/schemaValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRequest } from "@/composables/use-request";
+import { useToast } from "@/components/toast/use-toast";
+import ToastComponent from "@/components/toast/toast-component";
 
 export default function AddCategoryForm() {
   const form = useForm({
@@ -23,7 +26,33 @@ export default function AddCategoryForm() {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof categorySchema>) => {};
+  const { execute: createCategory, loading } = useRequest("/api/categories", {
+    enabled: false,
+  });
+  const { toasts, addToast, removeToast } = useToast();
+
+  const onSubmit = async (values: z.infer<typeof categorySchema>) => {
+    await createCategory({
+      method: "POST",
+      data: values,
+      onSuccess: () => {
+        addToast({
+          message: "Category created successfully.",
+          type: "success",
+          showLoader: true,
+        });
+        form.reset();
+      },
+      onError: (error) => {
+        addToast({
+          message:
+            (error as any)?.message ?? "Unable to create category.",
+          type: "danger",
+          showLoader: true,
+        });
+      },
+    });
+  };
 
   return (
     <main className="mt-5">
@@ -52,11 +81,23 @@ export default function AddCategoryForm() {
             </div>
 
             {/* Submit Button */}
-            <Button type="submit" className="w-full">
-              Add Category
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Adding..." : "Add Category"}
             </Button>
           </form>
         </Form>
+      </div>
+      <div>
+        {toasts.map((toast) => (
+          <ToastComponent
+            key={toast.id}
+            message={toast.message}
+            type={toast.type}
+            duration={toast.duration}
+            showLoader={toast.showLoader}
+            onDismiss={() => removeToast(toast.id)}
+          />
+        ))}
       </div>
     </main>
   );

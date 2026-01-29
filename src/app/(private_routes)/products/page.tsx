@@ -1,11 +1,12 @@
 import Filter from "@/sections/product/Filter";
 import ProductListings from "@/sections/product/ProductListings";
-import { products } from "@/constants/products";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
+import { getProductsWithFallback } from "@/serverUtils/catalog";
 
-export default function Products() {
+export default async function Products() {
+  const products = await getProductsWithFallback();
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3 px-3">

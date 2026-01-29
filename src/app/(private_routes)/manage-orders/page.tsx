@@ -8,39 +8,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getAdminOrdersWithFallback } from "@/serverUtils/orders";
 import React from "react";
 
-export default function ManageOrders() {
-  const orders = [
-    {
-      id: "ORD-1092",
-      customer: "Sophia Garcia",
-      total: "$249.99",
-      status: "Processing",
-      date: "Mar 12, 2025",
-    },
-    {
-      id: "ORD-1091",
-      customer: "James Lee",
-      total: "$89.00",
-      status: "Delivered",
-      date: "Mar 11, 2025",
-    },
-    {
-      id: "ORD-1090",
-      customer: "Ava Brown",
-      total: "$149.50",
-      status: "Shipped",
-      date: "Mar 10, 2025",
-    },
-    {
-      id: "ORD-1089",
-      customer: "Noah Johnson",
-      total: "$45.25",
-      status: "Cancelled",
-      date: "Mar 09, 2025",
-    },
-  ];
+const formatCurrency = (amount: number) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(
+    amount
+  );
+
+export default async function ManageOrders() {
+  const orders = await getAdminOrdersWithFallback();
 
   return (
     <section className="px-4 py-6">
@@ -61,8 +38,8 @@ export default function ManageOrders() {
           <TableHeader>
             <TableRow>
               <TableHead>Order ID</TableHead>
-              <TableHead>Customer</TableHead>
-              <TableHead>Date</TableHead>
+              <TableHead>Items</TableHead>
+              <TableHead>ETA</TableHead>
               <TableHead>Total</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -74,9 +51,9 @@ export default function ManageOrders() {
                 <TableCell className="font-medium text-gray-900">
                   {order.id}
                 </TableCell>
-                <TableCell>{order.customer}</TableCell>
-                <TableCell>{order.date}</TableCell>
-                <TableCell>{order.total}</TableCell>
+                <TableCell>{order.products}</TableCell>
+                <TableCell>{order.deliveryETA}</TableCell>
+                <TableCell>{formatCurrency(order.totalPrice)}</TableCell>
                 <TableCell>
                   <Badge
                     className={

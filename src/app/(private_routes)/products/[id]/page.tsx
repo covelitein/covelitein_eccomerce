@@ -1,10 +1,15 @@
-import { products } from "@/constants/products";
+import { getProductsWithFallback } from "@/serverUtils/catalog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default function ProductDetails({ params }: { params: { id: string } }) {
+export default async function ProductDetails({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const products = await getProductsWithFallback();
   const product = products.find((item) => item.id === params.id);
 
   if (!product) {

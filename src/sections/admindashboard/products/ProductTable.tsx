@@ -1,4 +1,3 @@
-import { products } from "@/constants/products";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getProductsWithFallback } from "@/serverUtils/catalog";
 
 const inventoryStatus = (price: number) => {
   if (price > 500) return { label: "Limited", color: "bg-amber-100 text-amber-700" };
@@ -16,7 +16,8 @@ const inventoryStatus = (price: number) => {
   return { label: "Available", color: "bg-blue-100 text-blue-700" };
 };
 
-export default function ProductTable() {
+export default async function ProductTable() {
+  const products = await getProductsWithFallback();
   return (
     <div className="mt-6 rounded-xl border bg-white">
       <Table>

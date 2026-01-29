@@ -1,13 +1,12 @@
 "use client";
 
-import { products } from "@/constants/products";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ToastComponent from "@/components/toast/toast-component";
 import { useToast } from "@/components/toast/use-toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -15,18 +14,41 @@ export default function CheckoutPage() {
   const { toasts, addToast, removeToast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const cartItems = useMemo(
-    () =>
-      products.slice(0, 3).map((item) => ({
-        ...item,
-        quantity: 1,
-      })),
-    []
-  );
+  const [cartItems, setCartItems] = useState<
+    Array<{
+      id: string;
+      name: string;
+      image: string;
+      category: string;
+      price: number;
+      quantity: number;
+    }>
+  >([]);
+  const [loadingItems, setLoadingItems] = useState(true);
 
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await fetch("/api/products");
+        const payload = await response.json();
+        if (response.ok) {
+          const items = (payload.products ?? []).slice(0, 3).map((item: any) => ({
+            ...item,
+            quantity: 1,
+          }));
+          setCartItems(items);
+        }
+      } finally {
+        setLoadingItems(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  const total = useMemo(
+    () => cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [cartItems]
   );
 
   const handlePayment = async () => {
@@ -81,32 +103,38 @@ export default function CheckoutPage() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="p-6 lg:col-span-2 space-y-4">
-          {cartItems.map((item) => (
-            <div
-              key={item.id}
-              className="flex items-center justify-between gap-4"
-            >
-              <div className="flex items-center gap-3">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="h-16 w-16 rounded-lg object-cover"
-                />
-                <div>
-                  <p className="font-medium text-gray-900">{item.name}</p>
-                  <p className="text-sm text-gray-500">{item.category}</p>
+          {loadingItems ? (
+            <div className="text-gray-500">Loading cart items...</div>
+          ) : cartItems.length ? (
+            cartItems.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between gap-4"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="h-16 w-16 rounded-lg object-cover"
+                  />
+                  <div>
+                    <p className="font-medium text-gray-900">{item.name}</p>
+                    <p className="text-sm text-gray-500">{item.category}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="font-semibold text-gray-900">
+                    ₦{item.price.toFixed(2)}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Qty: {item.quantity}
+                  </p>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="font-semibold text-gray-900">
-                  ₦{item.price.toFixed(2)}
-                </p>
-                <p className="text-sm text-gray-500">
-                  Qty: {item.quantity}
-                </p>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="text-gray-500">No items to checkout.</div>
+          )}
         </Card>
 
         <Card className="p-6 space-y-4">
@@ -122,7 +150,10 @@ export default function CheckoutPage() {
             <span>Total</span>
             <span>₦{total.toFixed(2)}</span>
           </div>
-          <Button onClick={handlePayment} disabled={isSubmitting}>
+          <Button
+            onClick={handlePayment}
+            disabled={isSubmitting || loadingItems || !cartItems.length}
+          >
             {isSubmitting ? "Starting payment..." : "Pay with Paystack (Mock)"}
           </Button>
           <p className="text-xs text-gray-500">
